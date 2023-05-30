@@ -10,7 +10,7 @@ def createBoard(): #Create a chess board
             if i == 0:        #Line 1
                 Line.append('B' + ChessBoard[j])     #Add black pieces
             elif i == 7:      #Line 8
-                Line.append('W' + ChessBoard[7 - j]) #Add white pieces 
+                Line.append('W' + ChessBoard[j]) #Add white pieces 
             elif i == 1:      #Line 2
                 Line.append("BPawn")                 #Add black pawns
             elif i == 6:      #Line 7
@@ -717,11 +717,9 @@ def castling(Board, P1, P2):
     y2 = int(P2 / 10)
     Colour = 0
     k = 1
-    
     if Board[y1][x1][0] == "W":
         Colour = 1
-        k = -1
-    
+        k = 1
     if checkKing(Board, Colour) == True:
         return False
     if len(Board[y1][x1][0]) == 0 or len(Board[y2][x2]) == 0:
@@ -759,8 +757,6 @@ def kingMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black,
                     elif Board[int((Place + move) / 10)][(Place + move) % 10][0] != pieceColour[Colour]: #check the colour to avoid eat itself's pieces
                         l.append(Place + move)
         k = 1
-        if Colour == 1:
-            k = -1
         if kingMoved[Colour] == False:
             if castling(Board, Place, Place + k * 3) == True:
                 l.append(Place + k * 2)
@@ -776,8 +772,8 @@ def kingMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black,
 def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
 
     d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 5, 'F' : 6, 'G' : 7}
-    P1 = d[P1[0].upper()] + int(P1[1]) * 10 - 10
-    P2 = d[P2[0].upper()] + int(P2[1]) * 10 - 10
+    P1 = d[P1[0].upper()] + int(P1[1]) * 10 - 11
+    P2 = d[P2[0].upper()] + int(P2[1]) * 10 - 11
     
     
     if len(Board[int(P1 / 10)][P1 % 10]) == 0:
@@ -812,9 +808,11 @@ def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
 
 def pieceMove(Board, P1, P2, C): #move a piece on board to another place
     d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 5, 'F' : 6, 'G' : 7}
-    a = d[P1[0].upper()] + int(P1[1]) * 10 - 10
-    b = d[P2[0].upper()] + int(P2[1]) * 10 - 10
+    a = d[P1[0].upper()] + int(P1[1]) * 10 - 11
+    b = d[P2[0].upper()] + int(P2[1]) * 10 - 11
     Colour = 0
+    if len(Board[int(a / 10)][a % 10]) == 0:
+        return "No piece here"
     if Board[int(a / 10)][a % 10][0] == "W":
         Colour = 1
     if C != Colour:
@@ -886,5 +884,4 @@ def gameSituation(Board):
     if hasValidMoves(Board, 1) == False or hasValidMoves(Board, 0) == False:
         return "Draw"
     else:
-        return "Countinue"
-
+        return "Continue"
