@@ -648,7 +648,6 @@ def knightMovementNoLimit(Board, Colour, Place): #Colour should be 0 or 1, 0 mea
 
 
 
-
 def kingCanNotGo(Board, Colour): #Colour should be 0 or 1, 0 means black, 1 means white; This colour is for king's colour
     #check where king can go, where king can't
     forbidenArea = [] #the place that king can't move to
@@ -717,14 +716,16 @@ def castling(Board, P1, P2):
     y2 = int(P2 / 10)
     Colour = 0
     k = 1
+    if not (x1 >= 0 and y1 >= 0 and x1 <= 7 and y1 <= 7 and x2 >= 0 and y2 >= 0 and x2 <= 7 and y2 <= 7):
+        return False
+    if Board[y1][x1][1:] != "King" or Board[y2][x2][1:] != "Rook":
+        return False
     if Board[y1][x1][0] == "W":
         Colour = 1
         k = 1
     if x1 != 4:
         return False
     if checkKing(Board, Colour) == True:
-        return False
-    if len(Board[y1][x1]) == 0 or len(Board[y2][x2]) == 0:
         return False
     RookPlace = [[0, 7], [70, 77]]
     if Board[y1][x1][0] == Board[y2][x2][0]:
@@ -758,12 +759,11 @@ def kingMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black,
                         l.append(Place + move)
                     elif Board[int((Place + move) / 10)][(Place + move) % 10][0] != pieceColour[Colour]: #check the colour to avoid eat itself's pieces
                         l.append(Place + move)
-        k = 1
         if kingMoved[Colour] == False:
-            if castling(Board, Place, Place + k * 3) == True:
-                l.append(Place + k * 2)
-            if castling(Board, Place, Place - k * 4) == True:
-                l.append(Place - k * 3)
+            if castling(Board, Place, Place + 3) == True:
+                l.append(Place + 2)
+            if castling(Board, Place, Place - 4) == True:
+                l.append(Place - 2)
             
         return l
     else:
@@ -797,7 +797,7 @@ def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
             if P2 in bishopMovement(Board, Colour, P1):
                 b = True
         elif pieceKind == "Queen":
-            if P2 in queenMovement(Board, Colour, P1)[0] or  P2 in queenMovemnt(Board, Colour, P1)[1]:
+            if P2 in queenMovement(Board, Colour, P1)[0] or  P2 in queenMovement(Board, Colour, P1)[1]:
                 b = True
         elif pieceKind == "Knight":
             if P2 in knightMovement(Board, Colour, P1):
@@ -827,6 +827,13 @@ def pieceMove(Board, P1, P2, C): #move a piece on board to another place
             if Board[int(a / 10)][a % 10] == "King": # check if the king moved
                 kingMoved[Colour] = True
             Board[int(b / 10)][b % 10] = Board[int(a / 10)][a % 10]
+            if b < a:
+                if castling(Board, a, a - 4):
+                    Board[int(b / 10)][b % 10 + 1] = pieceColour[C] + "Rook"
+                    Board[C * 7][0] = ""
+            elif castling(Board, a, a + 3):
+                Board[int(b / 10)][b % 10 - 1] = pieceColour[C] + "Rook"
+                Board[C * 7][7] = ""
             Board[int(a / 10)][a % 10] = ""
             return Board
         elif pieceMovement(Board, P1, P2) != False:
@@ -875,7 +882,6 @@ def hasValidMoves(Board, Colour):
                     return True
     return False
 
-
 def gameSituation(Board):
     for i in range(0, 8):
         if i in checkPlace(Board, "Pawn")[1]:
@@ -892,4 +898,3 @@ def gameSituation(Board):
         return "Draw"
     else:
         return "Continue"
-
