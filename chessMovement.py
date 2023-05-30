@@ -44,7 +44,7 @@ def checkPlace(Board, Piece):    #check where is each pieces
 
 def pawnMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black, 1 means white; Board: the chess boardl; Place: the coordinate of the pawn
     p = [[70, 71, 72, 73, 74, 75, 76, 77],[0, 1, 2, 3, 4, 5, 6, 7]]
-    if Place in checkPlace(Board, "Pawn")[Colour] and int(Place / 10) < 7 and int(Place / 10) > 0: #check if Place
+    if Place in checkPlace(Board, "Pawn")[Colour] and int(Place / 10) < 7 and int(Place / 10) > 0: #check if it's wrong Place or the pawn can change to other pieces
         l = [] #list that will be return
         if Colour == 0: #check if it's black or not
             if len(Board[int(Place / 10) + 1][Place % 10]) == 0: #check is the front of the pieces empty or not
@@ -55,7 +55,7 @@ def pawnMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black,
                 if len(Board[int(Place / 10) + 1][Place % 10 + 1]) > 0: #check it's right front
                     if (Board[int(Place / 10) + 1][Place % 10 + 1][0] == "W"):
                         l.append(Place + 11)
-            if Place / 10 < 0 and Place % 10 > 0:
+            if Place / 10 < 7 and Place % 10 > 0:
                 if len(Board[int(Place / 10) +1][Place % 10 - 1]) > 0: #check it's left front
                     if (Board[int(Place / 10) + 1][Place % 10 - 1][0] == "W"):
                         l.append(Place + 9)
@@ -379,28 +379,28 @@ def queenMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black
 def knightMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black, 1 means white
     if Place in checkPlace(Board, "Knight")[Colour]:
         l = []
-        if int(Place / 10) - 2 > 0 and Place % 10 + 1 < 7:  #back right(lower)
+        if int(Place / 10) - 2 >= 0 and Place % 10 + 1 <= 7:  #back right(lower)
             if len(Board[int(Place / 10) - 2][Place % 10 + 1]) == 0:
                 l.append(Place - 19)
             elif Board[int(Place / 10) - 2][Place % 10 + 1][0] != pieceColour[Colour]:
                 l.append(Place - 19)
 
         
-        if int(Place / 10) - 1 > 0 and Place % 10 + 2 < 7: #back right(higher)
+        if int(Place / 10) - 1 >= 0 and Place % 10 + 2 <= 7: #back right(higher)
             if len(Board[int(Place / 10) - 1][Place % 10 + 2]) == 0:
                 l.append(Place - 8)
             elif Board[int(Place / 10) - 1][Place % 10 + 2][0] != pieceColour[Colour]:
                 l.append(Place - 8)
 
         
-        if int(Place / 10) + 2 < 7 and Place % 10 + 1 < 7: #front right(higher)
+        if int(Place / 10) + 2 <= 7 and Place % 10 + 1 <= 7: #front right(higher)
             if len(Board[int(Place / 10) + 2][Place % 10 + 1]) == 0:
                 l.append(Place + 21)
             elif Board[int(Place / 10) + 2][Place % 10 + 1][0] != pieceColour[Colour]:
                 l.append(Place + 21)
 
         
-        if int(Place / 10) + 1 < 7 and Place % 10 + 2 < 7: #front right(lower)
+        if int(Place / 10) + 1 <= 7 and Place % 10 + 2 <= 7: #front right(lower)
             if len(Board[int(Place / 10) + 1][Place % 10 + 2]) == 0:
                 l.append(Place + 12)
             elif Board[int(Place / 10) + 1][Place % 10 + 2][0] != pieceColour[Colour]:
@@ -408,28 +408,28 @@ def knightMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means blac
 
 
         
-        if int(Place / 10) + 2 < 7 and Place % 10 - 1 > 0: #front left(higher)
+        if int(Place / 10) + 2 <= 7 and Place % 10 - 1 >= 0: #front left(higher)
             if len(Board[int(Place / 10) + 2][Place % 10 - 1]) == 0:
                 l.append(Place + 19)
             elif Board[int(Place / 10) + 2][Place % 10 - 1][0] != pieceColour[Colour]:
                 l.append(Place + 19)
 
         
-        if int(Place / 10) + 1 < 7 and Place % 10 - 2 > 0: #front left(lower)
+        if int(Place / 10) + 1 <= 7 and Place % 10 - 2 >= 0: #front left(lower)
             if len(Board[int(Place / 10) + 1][Place % 10 - 2]) == 0:
                 l.append(Place + 8)
             elif Board[int(Place / 10) + 1][Place % 10 - 2][0] != pieceColour[Colour]:
                 l.append(Place + 8)
 
         
-        if int(Place / 10) - 2 > 0 and Place % 10 - 1 > 0: #back left(lower)
+        if int(Place / 10) - 2 >= 0 and Place % 10 - 1 >= 0: #back left(lower)
             if len(Board[int(Place / 10) - 2][Place % 10 - 1]) == 0:
                 l.append(Place - 21)
             elif Board[int(Place / 10) - 2][Place % 10 - 1][0] == pieceColour[Colour]:
                 l.append(Place - 21)
 
         
-        if int(Place / 10) - 1 > 0 and Place % 10 - 2 > 0: #back left(higher)
+        if int(Place / 10) - 1 >= 0 and Place % 10 - 2 >= 0: #back left(higher)
             if len(Board[int(Place / 10) - 1][Place % 10 - 2]) == 0:
                 l.append(Place - 12)
             elif Board[int(Place / 10) - 1][Place % 10 - 2][0] != pieceColour[Colour]:
@@ -720,9 +720,11 @@ def castling(Board, P1, P2):
     if Board[y1][x1][0] == "W":
         Colour = 1
         k = 1
+    if x1 != 4:
+        return False
     if checkKing(Board, Colour) == True:
         return False
-    if len(Board[y1][x1][0]) == 0 or len(Board[y2][x2]) == 0:
+    if len(Board[y1][x1]) == 0 or len(Board[y2][x2]) == 0:
         return False
     RookPlace = [[0, 7], [70, 77]]
     if Board[y1][x1][0] == Board[y2][x2][0]:
@@ -771,10 +773,9 @@ def kingMovement(Board, Colour, Place): #Colour should be 0 or 1, 0 means black,
 
 def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
 
-    d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 5, 'F' : 6, 'G' : 7}
-    P1 = d[P1[0].upper()] + int(P1[1]) * 10 - 11
-    P2 = d[P2[0].upper()] + int(P2[1]) * 10 - 11
-    
+    d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 4, 'F' : 5, 'G' : 6, 'H' : 7}
+    P1 = d[P1[0].upper()] + int(P1[1]) * 10 - 10
+    P2 = d[P2[0].upper()] + int(P2[1]) * 10 - 10
     
     if len(Board[int(P1 / 10)][P1 % 10]) == 0:
         return "NO PIECE IN THIS PLACE"
@@ -807,9 +808,10 @@ def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
         return b
 
 def pieceMove(Board, P1, P2, C): #move a piece on board to another place
-    d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 5, 'F' : 6, 'G' : 7}
-    a = d[P1[0].upper()] + int(P1[1]) * 10 - 11
-    b = d[P2[0].upper()] + int(P2[1]) * 10 - 11
+    d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 4, 'F' : 5, 'G' : 6, 'H' : 7}
+    a = d[P1[0].upper()] + int(P1[1]) * 10 - 10
+    b = d[P2[0].upper()] + int(P2[1]) * 10 - 10
+    
     Colour = 0
     if len(Board[int(a / 10)][a % 10]) == 0:
         return "No piece here"
@@ -875,6 +877,11 @@ def hasValidMoves(Board, Colour):
 
 
 def gameSituation(Board):
+    for i in range(0, 8):
+        if i in checkPlace(Board, "Pawn")[1]:
+            return "0" + str(i) + "1" + "Change Pawn"
+        elif (i + 70) in checkPlace(Board, "Pawn")[0]:
+            return "7" + str(i) + "0" + "Change Pawn"      
     if len(kingMovement(Board, 0, checkPlace(Board, "King")[0][0])) == 0:
         if checkKing(Board, 0) == True:
             return "White wins"
@@ -885,3 +892,4 @@ def gameSituation(Board):
         return "Draw"
     else:
         return "Continue"
+
