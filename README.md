@@ -29,7 +29,7 @@ The functions includes in this module:
 
 12.castling(Board, P1, P2): This function checks whether the pieces P1 and P2 on the chessboard Board (created by the createBoard() function) can perform a castling move. P1 and P2 are the coordinates of the two pieces, with both the tens and units digits ranging from 0 to 7. It returns a boolean value.
 
-13.pieceMove(Board, P1, P2): P1 and P2 are standard coordinates used in international chess notation (e.g., a1, b3). Board is the chessboard created by the createBoard() function. This function first checks for check (if the king is in check, it returns "Move your king first"), then checks if the chess piece at P1 can move to position P2 (if not, it returns "Can't move"). If the move is valid, it returns a modified two-dimensional array (Board) representing the updated positions of the chess pieces.
+13.pieceMove(Board, P1, P2, C): P1 and P2 are standard coordinates used in international chess notation (e.g., a1, b3). Board is the chessboard created by the createBoard() function. C is same as the variable Colour showed ahead. This function first checks if the colour is right, then check the check king (if the king is in check, it returns "Move your king first"), then checks if the chess piece at P1 can move to position P2 (if not, it returns "Can't move"). If the move is valid, it returns a modified two-dimensional array (Board) representing the updated positions of the chess pieces.
 
 14.hasValidMoves(Board, Colour): Board and Colour are defined as above. This function returns a boolean value. If there are still valid moves for the pieces of the specified color (i.e., no move would result in the king being in check), it returns True; otherwise, it returns False.
 
