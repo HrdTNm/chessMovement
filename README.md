@@ -34,3 +34,5 @@ The functions includes in this module:
 14.hasValidMoves(Board, Colour): Board and Colour are defined as above. This function returns a boolean value. If there are still valid moves for the pieces of the specified color (i.e., no move would result in the king being in check), it returns True; otherwise, it returns False.
 
 15.pawnChange(Board, Colour, Place, Kind): Board, Colour, and Place are defined as above. Kind represents the type of chess piece (possible values: "Pawn", "Rook", "Bishop", "Knight", "Queen", "King"). This function promotes a pawn to a chess piece of the specified Kind if the pawn has reached the opponent's baseline. If the chess piece at Place is not a pawn or has not reached the opponent's baseline, no changes are made. It returns the modified chessboard (Board) after the pawn promotion.
+
+16.gameSituation(Board): Board are defined as above。Show the chess situation at this time，Its possible returns are”White wins”, ”Black wins”, ”Draw” , ”Continue”
