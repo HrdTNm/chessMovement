@@ -44,6 +44,10 @@ def main():
             
             
         move = []
+        if j % 2 == 1:
+            print("White moves")
+        else:
+            print("Black moves")
         move.append(input("Which piece you want to move?"))
         move.append(input("Where do you want to move?"))
         print()
