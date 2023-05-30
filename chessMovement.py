@@ -810,13 +810,15 @@ def pieceMovement(Board, P1, P2): #Detect if a piece can go from P1 to P2
                 b = True
         return b
 
-def pieceMove(Board, P1, P2): #move a piece on board to another place
+def pieceMove(Board, P1, P2, C): #move a piece on board to another place
     d = {'A' : 0, 'B' : 1, 'C' : 2, 'D' : 3, 'E' : 5, 'F' : 6, 'G' : 7}
     a = d[P1[0].upper()] + int(P1[1]) * 10 - 10
     b = d[P2[0].upper()] + int(P2[1]) * 10 - 10
     Colour = 0
     if Board[int(a / 10)][a % 10][0] == "W":
         Colour = 1
+    if C != Colour:
+        return "You can't move this piece"
     if checkKing(Board, Colour) == True and Board[int(a / 10)][a % 10][1:] != "King":
         return "Move your king first"
     else:
